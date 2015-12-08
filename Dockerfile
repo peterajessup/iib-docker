@@ -15,7 +15,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && \
-	apt-get dist-upgrade
+	apt-get dist-upgrade -y
 	
 
 # Install IIB V10 Developer edition
