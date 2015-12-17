@@ -1,3 +1,7 @@
+# Origin
+
+this repository is a clone of the original ot4i/iibdocker repository on github
+
 # Overview
 
 This repository contains a Dockerfile and some scripts which demonstrate a way in which you might run [IBM Integration Bus](http://www-03.ibm.com/software/products/en/ibm-integration-bus) in a [Docker](https://www.docker.com/whatisdocker/) container.
