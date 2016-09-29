@@ -8,7 +8,7 @@
 
 set -e
 
-NODE_NAME=${NODENAME-IIBV10NODE}
+NODE_NAME=${NODENAME-IIBV10CCC}
 
 stop()
 {
@@ -36,6 +36,8 @@ start()
 	echo "----------------------------------------"
 	echo "Starting syslog"
   sudo /usr/sbin/rsyslogd
+  	echo "Configuring db access"
+  	mqsisetdbparms $NODE_NAME -n jdbc::sql1 -u sa -p pa$$w0rd
 	echo "Starting node $NODE_NAME"
 	mqsistart $NODE_NAME
 	echo "----------------------------------------"
