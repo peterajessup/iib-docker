@@ -45,7 +45,7 @@ COPY sqljdbc4.jar /opt/ibm/iib-10.0.0.6/common/classes
 COPY odbc.ini /etc
 COPY odbcinst.ini /etc
 RUN chgrp mqbrkrs /etc/odbc.ini
-RUN chown iibuser /etc.odbc.ini
+RUN chown iibuser /etc/odbc.ini
 RUN chmod 664 /etc/odbc.ini
 RUN chmod +rx /usr/local/bin/*.sh
 
