@@ -42,10 +42,17 @@ COPY iib-license-check.sh /usr/local/bin/
 COPY iib_env.sh /usr/local/bin/
 COPY login.defs /etc/login.defs
 COPY sqljdbc4.jar /opt/ibm/iib-10.0.0.6/common/classes
+COPY odbc.ini /etc
+COPY odbcinst.ini /etc
+RUN chgrp mqbrkrs /etc/odbc.ini
+RUN chown iibuser /etc.odbc.ini
+RUN chmod 664 /etc/odbc.ini
 RUN chmod +rx /usr/local/bin/*.sh
 
 # Set BASH_ENV to source mqsiprofile when using docker exec bash -c
 ENV BASH_ENV=/usr/local/bin/iib_env.sh
+ENV ODBCINI=/etc/odbc.ini
+
 
 # Expose default admin port and http port
 EXPOSE 4414 7800 7883

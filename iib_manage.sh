@@ -37,7 +37,9 @@ start()
 	echo "Starting syslog"
   sudo /usr/sbin/rsyslogd
   	echo "Configuring db access"
-  	mqsisetdbparms $NODE_NAME -n jdbc::sql2 -u sa -p pa$$w0rd
+  	mqsisetdbparms $NODE_NAME -n jdbc::sql1 -u sa -p passw0rd
+  	mqsichangeproperties IIBV10CCC -c JDBCProviders -o BROKER -n type4DatasourceClassName,type4DriverClassName,databaseType,jdbcProviderXASupport,portNumber,connectionUrlFormatAttr5,connectionUrlFormatAttr4,serverName,connectionUrlFormatAttr3,connectionUrlFormatAttr2,connectionUrlFormatAttr1,environmentParms,maxConnectionPoolSize,description,jarsURL,databaseName,databaseVersion,securityIdentity,connectionUrlFormat,databaseSchemaNames -v "com.microsoft.sqlserver.jdbc.SQLServerXADataSource","com.microsoft.sqlserver.jdbc.SQLServerDriver","Microsoft SQL Server","true","16828","","","cap-sg-prd-1.integration.ibmcloud.com","","","","default_none","0","default_Description","default_Path","BROKER","default_Database_Version","sql2","jdbc:sqlserver://[serverName]:[portNumber];DatabaseName=[databaseName];user=[user];password=[password]","useProvidedSchemaNames"
+  	
 	echo "Starting node $NODE_NAME"
 	mqsistart $NODE_NAME
 	echo "----------------------------------------"
