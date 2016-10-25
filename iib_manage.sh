@@ -42,6 +42,7 @@ start()
   sudo /usr/sbin/rsyslogd
   	echo "Configuring db access"
   	mqsisetdbparms $NODE_NAME -n jdbc::sql1 -u sa -p passw0rd
+  	mqsisetdbparms $NODE_NAME -n BROKER -u sa -p password
   	
 
 
