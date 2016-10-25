@@ -9,6 +9,8 @@
 set -e
 
 NODE_NAME=${NODENAME-IIBV10CCC}
+JDBC_SERVICE=BROKER
+
 
 stop()
 {
@@ -24,6 +26,8 @@ start()
 	echo "----------------------------------------"
 
   NODE_EXISTS=`mqsilist | grep $NODE_NAME > /dev/null ; echo $?`
+  SERVICE_EXISTS=`mqsireportproperties $NODE_NAME -c JDBCProviders -o $JDBC_SERVICE -n Name | grep $JDBC_SERVICE > /dev/null ; echo $?`
+  
 
 
 	if [ ${NODE_EXISTS} -ne 0 ]; then
@@ -39,11 +43,17 @@ start()
   	echo "Configuring db access"
   	mqsisetdbparms $NODE_NAME -n jdbc::sql1 -u sa -p passw0rd
   	
-	echo "Starting node $NODE_NAME"
-	mqsistart $NODE_NAME
-	mqsicreateconfigurableservice $NODE_NAME -c JDBCProviders -o BROKER -n type4DatasourceClassName,type4DriverClassName,databaseType,jdbcProviderXASupport,portNumber,connectionUrlFormatAttr5,connectionUrlFormatAttr4,serverName,connectionUrlFormatAttr3,connectionUrlFormatAttr2,connectionUrlFormatAttr1,environmentParms,maxConnectionPoolSize,description,jarsURL,databaseName,databaseVersion,securityIdentity,connectionUrlFormat,databaseSchemaNames -v "com.microsoft.sqlserver.jdbc.SQLServerXADataSource","com.microsoft.sqlserver.jdbc.SQLServerDriver","Microsoft SQL Server","true","16828","","","cap-sg-prd-1.integration.ibmcloud.com","","","","default_none","0","default_Description","default_Path","BROKER","default_Database_Version","sql2","jdbc:sqlserver://[serverName]:[portNumber];DatabaseName=[databaseName];user=[user];password=[password]","useProvidedSchemaNames"
-  	mqsistop $NODE_NAME
-  	sleep 5
+
+
+	if [ ${SERVICE_EXISTS} -ne 0 ] ; then
+		mqsistart $NODE_NAME
+		sleep 5
+		mqsicreateconfigurableservice $NODE_NAME -c JDBCProviders -o BROKER -n type4DatasourceClassName,type4DriverClassName,databaseType,jdbcProviderXASupport,portNumber,connectionUrlFormatAttr5,connectionUrlFormatAttr4,serverName,connectionUrlFormatAttr3,connectionUrlFormatAttr2,connectionUrlFormatAttr1,environmentParms,maxConnectionPoolSize,description,jarsURL,databaseName,databaseVersion,securityIdentity,connectionUrlFormat,databaseSchemaNames -v "com.microsoft.sqlserver.jdbc.SQLServerXADataSource","com.microsoft.sqlserver.jdbc.SQLServerDriver","Microsoft SQL Server","true","16152","","","cap-sg-prd-2.integration.ibmcloud.com","","","","default_none","0","default_Description","default_Path","BROKER","default_Database_Version","sql2","jdbc:sqlserver://[serverName]:[portNumber];DatabaseName=[databaseName];user=[user];password=[password]","useProvidedSchemaNames"
+  		mqsistop $NODE_NAME
+  		sleep 5
+  	fi
+  	echo "Starting node $NODE_NAME"
+  	
   	mqsistart $NODE_NAME
 	echo "----------------------------------------"
 }
