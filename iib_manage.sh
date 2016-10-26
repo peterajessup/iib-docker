@@ -9,7 +9,7 @@
 set -e
 
 NODE_NAME=${NODENAME-IIBV10CCC}
-JDBC_SERVICE=BROKER
+export JDBC_SERVICE=BROKER
 
 
 stop()
@@ -53,11 +53,9 @@ start()
 	SERVICE_EXISTS=`mqsireportproperties $NODE_NAME -c JDBCProviders -o $JDBC_SERVICE -n Name | grep $JDBC_SERVICE > /dev/null ; echo $?`
 	
 	if [ ${SERVICE_EXISTS} -ne 0 ] ; then
-		mqsistart $NODE_NAME
-		sleep 5
+		
 		mqsicreateconfigurableservice $NODE_NAME -c JDBCProviders -o BROKER -n type4DatasourceClassName,type4DriverClassName,databaseType,jdbcProviderXASupport,portNumber,connectionUrlFormatAttr5,connectionUrlFormatAttr4,serverName,connectionUrlFormatAttr3,connectionUrlFormatAttr2,connectionUrlFormatAttr1,environmentParms,maxConnectionPoolSize,description,jarsURL,databaseName,databaseVersion,securityIdentity,connectionUrlFormat,databaseSchemaNames -v "com.microsoft.sqlserver.jdbc.SQLServerXADataSource","com.microsoft.sqlserver.jdbc.SQLServerDriver","Microsoft SQL Server","true","16152","","","cap-sg-prd-2.integration.ibmcloud.com","","","","default_none","0","default_Description","default_Path","BROKER","default_Database_Version","sql2","jdbc:sqlserver://[serverName]:[portNumber];DatabaseName=[databaseName];user=[user];password=[password]","useProvidedSchemaNames"
-  		mqsistop $NODE_NAME
-  		sleep 5
+
   	fi
   	
 }
