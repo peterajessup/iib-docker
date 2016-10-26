@@ -50,7 +50,7 @@ start()
   	mqsistart $NODE_NAME
 	echo "----------------------------------------"
 
-	SERVICE_EXISTS=`mqsireportproperties $NODE_NAME -c JDBCProviders -o $JDBC_SERVICE -n Name | grep $JDBC_SERVICE > /dev/null ; echo $?`
+	SERVICE_EXISTS=`mqsireportproperties $NODE_NAME -c JDBCProviders -o $JDBC_SERVICE -n Name > /dev/null ; echo $?`
 	
 	if [ ${SERVICE_EXISTS} -ne 0 ] ; then
 		
