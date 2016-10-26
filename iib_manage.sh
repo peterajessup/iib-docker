@@ -26,7 +26,7 @@ start()
 	echo "----------------------------------------"
 
   NODE_EXISTS=`mqsilist | grep $NODE_NAME > /dev/null ; echo $?`
-  SERVICE_EXISTS=`mqsireportproperties $NODE_NAME -c JDBCProviders -o $JDBC_SERVICE -n Name | grep $JDBC_SERVICE > /dev/null ; echo $?`
+  
   
 
 
@@ -45,8 +45,13 @@ start()
   	mqsisetdbparms $NODE_NAME -n jdbc::sql1 -u sa -p passw0rd
   	mqsisetdbparms $NODE_NAME -n BROKER -u sa -p passw0rd
   	
+	echo "Starting node $NODE_NAME"
+  	
+  	mqsistart $NODE_NAME
+	echo "----------------------------------------"
 
-
+	SERVICE_EXISTS=`mqsireportproperties $NODE_NAME -c JDBCProviders -o $JDBC_SERVICE -n Name | grep $JDBC_SERVICE > /dev/null ; echo $?`
+	
 	if [ ${SERVICE_EXISTS} -ne 0 ] ; then
 		mqsistart $NODE_NAME
 		sleep 5
@@ -54,10 +59,7 @@ start()
   		mqsistop $NODE_NAME
   		sleep 5
   	fi
-  	echo "Starting node $NODE_NAME"
   	
-  	mqsistart $NODE_NAME
-	echo "----------------------------------------"
 }
 
 monitor()
