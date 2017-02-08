@@ -21,8 +21,8 @@ RUN apt-get update && \
 # Install IIB V10 Developer edition
 RUN mkdir /opt/ibm && \
     curl http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.7-IIB-LINUX64-DEVELOPER.tar.gz \
-    | tar zx --exclude iib-10.0.0.6/tools --directory /opt/ibm && \
-    /opt/ibm/iib-10.0.0.6/iib make registry global accept license silently
+    | tar zx --exclude iib-10.0.0.7/tools --directory /opt/ibm && \
+    /opt/ibm/iib-10.0.0.7/iib make registry global accept license silently
 
 # Configure system
 COPY kernel_settings.sh /tmp/
@@ -41,7 +41,7 @@ COPY iib_manage.sh /usr/local/bin/
 COPY iib-license-check.sh /usr/local/bin/
 COPY iib_env.sh /usr/local/bin/
 COPY login.defs /etc/login.defs
-COPY sqljdbc4.jar /opt/ibm/iib-10.0.0.6/common/classes
+COPY sqljdbc4.jar /opt/ibm/iib-10.0.0.7/common/classes
 COPY odbc.ini /etc
 COPY odbcinst.ini /etc
 RUN chgrp mqbrkrs /etc/odbc.ini
