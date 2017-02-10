@@ -50,6 +50,8 @@ RUN chgrp mqbrkrs /home/iibuser/agentx.json
 RUN chown iibuser /home/iibuser/agentx.json
 RUN chgrp mqbrkrs /home/iibuser/switch.json
 RUN chown iibuser /home/iibuser/switch.json
+RUN chmod +r /home/iibuser/agentx.json
+RUN chmod +r /home/iibuser/switch.json
 RUN chgrp mqbrkrs /etc/odbc.ini
 RUN chown iibuser /etc/odbc.ini
 RUN chmod 664 /etc/odbc.ini
