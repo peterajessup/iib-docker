@@ -8,7 +8,8 @@
 
 set -e
 
-NODE_NAME=${NODENAME-IIBV10CCC}
+NODE_NAME=${NODE_NAME-IIBV1007}
+EXEC_NAME=IS1
 export JDBC_SERVICE=BROKER
 
 
@@ -18,6 +19,8 @@ stop()
 	echo "Stopping node $NODE_NAME..."
 	mqsistop $NODE_NAME
 }
+
+
 
 start()
 {
@@ -35,6 +38,10 @@ start()
     echo "Node $NODE_NAME does not exist..."
     echo "Creating node $NODE_NAME"
 		mqsicreatebroker $NODE_NAME
+		mqsistart $NODE_NAME
+		mqsicreateexecutiongroup $NODE_NAME $EXEC_NAME
+		mqsistop $NODE_NAME
+		
     echo "----------------------------------------"
 	fi
 	echo "----------------------------------------"
@@ -60,6 +67,23 @@ start()
 		mqsicreateconfigurableservice $NODE_NAME -c JDBCProviders -o $JDBC_SERVICE -n type4DatasourceClassName,type4DriverClassName,databaseType,jdbcProviderXASupport,portNumber,connectionUrlFormatAttr5,connectionUrlFormatAttr4,serverName,connectionUrlFormatAttr3,connectionUrlFormatAttr2,connectionUrlFormatAttr1,environmentParms,maxConnectionPoolSize,description,jarsURL,databaseName,databaseVersion,securityIdentity,connectionUrlFormat,databaseSchemaNames -v "com.microsoft.sqlserver.jdbc.SQLServerXADataSource","com.microsoft.sqlserver.jdbc.SQLServerDriver","Microsoft SQL Server","true","16152","","","cap-sg-prd-2.integration.ibmcloud.com","","","","default_none","0","default_Description","default_Path","BROKER","default_Database_Version","sql2","jdbc:sqlserver://[serverName]:[portNumber];DatabaseName=[databaseName];user=[user];password=[password]","useProvidedSchemaNames"
 
   	fi
+  	
+  	
+  	echo "Starting Switch Server"
+  	
+  	SWITCH_EXISTS=`iibswitch update switch /config /home/iibuser/switch.json` > /dev/null ; echo $?`
+  	
+  	if [ ${SWITCH_EXISTS} -ne 0 ] ; then
+  		echo "Creating and starting Switch"
+  		iibswitch create switch /config /home/iibuser/switch.json
+  		
+  	fi
+  	mqsichangeproperties $NODE_NAME -e $EXEC_NAME –o ComIbmIIBSwitchManager -n agentXConfigFile –p /home/iibuser/agentx.json
+  	
+  	mqsistop $NODE_NAME
+  	mqsistart $NODE_NAME
+  	
+  	
   	
 }
 
