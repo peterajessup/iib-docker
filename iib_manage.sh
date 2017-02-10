@@ -71,7 +71,7 @@ start()
   	
   	echo "Starting Switch Server"
   	
-  	SWITCH_EXISTS=`iibswitch update switch /config /home/iibuser/switch.json` > /dev/null ; echo $?`
+  	SWITCH_EXISTS=`iibswitch update switch /config /home/iibuser/switch.json > /dev/null ; echo $?`
   	
   	if [ ${SWITCH_EXISTS} -ne 0 ] ; then
   		echo "Creating and starting Switch"
