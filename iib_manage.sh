@@ -71,14 +71,14 @@ start()
   	
   	echo "Starting Switch Server"
   	
-  	SWITCH_EXISTS=`iibswitch update switch -c /home/iibuser/switch.json > /dev/null ; echo $?`
+  	SWITCH_EXISTS=`iibswitch create switch -c /home/iibuser/switch.json | grep "already" | wc -l`
   	
-  	if [ ${SWITCH_EXISTS} -ne 0 ] ; then
-  		echo "Creating and starting Switch"
-  		iibswitch create switch -c /home/iibuser/switch.json
+  	if [ ${SWITCH_EXISTS} -e 0 ] ; then
+  		echo "S starting Switch"
+  		iibswitch start switch -c /home/iibuser/switch.json
   		
   	fi
-  	mqsichangeproperties $NODE_NAME -e $EXEC_NAME –o ComIbmIIBSwitchManager -n agentXConfigFile –p /home/iibuser/agentx.json
+  	mqsichangeproperties $NODE_NAME -e $EXEC_NAME -o ComIbmIIBSwitchManager -n agentXConfigFile -p /home/iibuser/agentx.json
   	
   	mqsistop $NODE_NAME
   	mqsistart $NODE_NAME
