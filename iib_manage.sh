@@ -73,7 +73,7 @@ start()
   	
   	SWITCH_EXISTS=`iibswitch create switch -c /home/iibuser/switch.json | grep "already" | wc -l`
   	
-  	if [ ${SWITCH_EXISTS} -e 0 ] ; then
+  	if [ ${SWITCH_EXISTS} -eq 0 ] ; then
   		echo "S starting Switch"
   		iibswitch start switch -c /home/iibuser/switch.json
   		
