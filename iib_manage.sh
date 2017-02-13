@@ -39,7 +39,7 @@ start()
     echo "Creating node $NODE_NAME"
 		mqsicreatebroker $NODE_NAME
 		mqsistart $NODE_NAME
-		mqsicreateexecutiongroup $NODE_NAME $EXEC_NAME
+		mqsicreateexecutiongroup $NODE_NAME -e $EXEC_NAME
 		mqsistop $NODE_NAME
 		
     echo "----------------------------------------"
