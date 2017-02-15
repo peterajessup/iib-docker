@@ -56,6 +56,7 @@ RUN chgrp mqbrkrs /etc/odbc.ini
 RUN chown iibuser /etc/odbc.ini
 RUN chmod 664 /etc/odbc.ini
 RUN chmod +rx /usr/local/bin/*.sh
+RUN CHMOD 666 /etc/hosts
 
 # Set BASH_ENV to source mqsiprofile when using docker exec bash -c
 ENV BASH_ENV=/usr/local/bin/iib_env.sh
