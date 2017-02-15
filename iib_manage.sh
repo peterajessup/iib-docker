@@ -13,7 +13,7 @@ EXEC_NAME=IS1
 export JDBC_SERVICE=BROKER
 export HOST_NAME=IIBDOCKER
 
-echo "${HOST_NAME}	127.0.0.1" >> /etc/hosts
+
 
 
 stop()
