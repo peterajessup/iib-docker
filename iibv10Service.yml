@@ -1,0 +1,37 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: 2017-08-22T04:58:14Z
+    labels:
+      run: iibv10
+    name: iibv10
+    namespace: default
+    resourceVersion: "129602"
+    selfLink: /api/v1/namespaces/default/services/iibmq1
+    uid: 80e1a0be-86f6-11e7-a42c-6a9371d0b51b
+  spec:
+    ports:
+    - name: iib
+      port: 4414
+      protocol: TCP
+    - name: mq
+      port: 1414
+      protocol: TCP
+    - name: mqweb
+      port: 9443
+      protocol: TCP
+    - name: iibwork
+      port: 7800
+      protocol: TCP
+    selector:
+      run: iibmq1
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
