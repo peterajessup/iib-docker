@@ -41,21 +41,21 @@ COPY iib_manage.sh /usr/local/bin/
 COPY iib-license-check.sh /usr/local/bin/
 COPY iib_env.sh /usr/local/bin/
 COPY login.defs /etc/login.defs
-# COPY sqljdbc4.jar /opt/ibm/iib-10.0.0.7/common/classes
-# COPY odbc.ini /etc
-# COPY odbcinst.ini /etc
-# COPY agentx.json /home/iibuser
-# COPY switch.json /home/iibuser
-# RUN chgrp mqbrkrs /home/iibuser/agentx.json
-# RUN chown iibuser /home/iibuser/agentx.json
-# RUN chgrp mqbrkrs /home/iibuser/switch.json
-# RUN chown iibuser /home/iibuser/switch.json
-# RUN chmod +r /home/iibuser/agentx.json
-# RUN chmod +r /home/iibuser/switch.json
-# RUN chgrp mqbrkrs /etc/odbc.ini
-# RUN chown iibuser /etc/odbc.ini
-# RUN chmod 664 /etc/odbc.ini
-# RUN chmod +rx /usr/local/bin/*.sh
+COPY sqljdbc4.jar /opt/ibm/iib-10.0.0.7/common/classes
+COPY odbc.ini /etc
+COPY odbcinst.ini /etc
+COPY agentx.json /home/iibuser
+COPY switch.json /home/iibuser
+RUN chgrp mqbrkrs /home/iibuser/agentx.json
+RUN chown iibuser /home/iibuser/agentx.json
+RUN chgrp mqbrkrs /home/iibuser/switch.json
+RUN chown iibuser /home/iibuser/switch.json
+RUN chmod +r /home/iibuser/agentx.json
+RUN chmod +r /home/iibuser/switch.json
+RUN chgrp mqbrkrs /etc/odbc.ini
+RUN chown iibuser /etc/odbc.ini
+RUN chmod 664 /etc/odbc.ini
+RUN chmod +rx /usr/local/bin/*.sh
 # RUN chmod 666 /etc/hosts
 
 # Set BASH_ENV to source mqsiprofile when using docker exec bash -c
