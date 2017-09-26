@@ -28,7 +28,7 @@ items:
       metadata:
         creationTimestamp: null
         labels:
-          run: iibmq1
+          run: iibv10
       spec:
         containers:
         - env:
