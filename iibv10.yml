@@ -34,7 +34,7 @@ items:
         - env:
           - name: LICENSE
             value: accept
-          image: registry.ng.bluemix.net/bmimages/iib1007:2
+          image: registry.ng.bluemix.net/bmimages/iib1007:3
           imagePullPolicy: IfNotPresent
           name: iibv10
           ports:
